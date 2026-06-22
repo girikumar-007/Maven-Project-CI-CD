@@ -26,8 +26,8 @@ jobs:
       - name: Build with Maven
         run: mvn clean compile package -DskipTests
 
-      - name: Verify build artifacts
-        run: ls -la target/classes || echo "target/classes directory not found"
+      - name: Verify project structure
+        run: find . -type d -name "java" -o -type d -name "main" | head -20
 
       - name: SonarQube Scan Action
         uses: sonarsource/sonarqube-scan-action@v3
@@ -35,7 +35,7 @@ jobs:
           args: >
            -Dsonar.projectKey=your-project-key
            -Dsonar.java.binaries=target/classes
-           -Dsonar.sources=src/main/java
+           -Dsonar.sources=.
            -Dsonar.sourceEncoding=UTF-8
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
