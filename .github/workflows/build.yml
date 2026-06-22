@@ -20,7 +20,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '11'  # or your required Java version
+          java-version: '21'  # or your required Java version
           distribution: 'temurin'
 
       - name: Build with Maven
