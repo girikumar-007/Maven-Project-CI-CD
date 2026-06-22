@@ -33,10 +33,10 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@v3
         with:
           args: >
-            -Dsonar.projectKey=your-project-key
-            -Dsonar.java.binaries=target/classes
-            -Dsonar.sources=src
-            -Dsonar.sourceEncoding=UTF-8
+           -Dsonar.projectKey=your-project-key
+           -Dsonar.java.binaries=target/classes
+           -Dsonar.sources=src/main/java
+           -Dsonar.sourceEncoding=UTF-8
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
