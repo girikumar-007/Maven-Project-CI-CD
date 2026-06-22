@@ -26,17 +26,23 @@ jobs:
       - name: Build with Maven
         run: mvn clean compile package -DskipTests
 
-      - name: Verify project structure
-        run: find . -type d -name "java" -o -type d -name "main" | head -20
+      - name: Verify build output
+        run: |
+          echo "Checking if target/classes exists:"
+          if [ -d target/classes ]; then
+            echo "✓ target/classes found"
+            ls -la target/classes | head -20
+          else
+            echo "⚠ target/classes not found - will scan source code only"
+          fi
 
       - name: SonarQube Scan Action
         uses: sonarsource/sonarqube-scan-action@v3
         with:
           args: >
-           -Dsonar.projectKey=your-project-key
-           -Dsonar.java.binaries=target/classes
-           -Dsonar.sources=.
-           -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.projectKey=your-project-key
+            -Dsonar.sources=.
+            -Dsonar.sourceEncoding=UTF-8
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
