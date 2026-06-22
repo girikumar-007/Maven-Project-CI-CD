@@ -20,11 +20,14 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'  # or your required Java version
+          java-version: '21'
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn clean package -DskipTests
+        run: mvn clean compile package -DskipTests
+
+      - name: Verify build artifacts
+        run: ls -la target/classes || echo "target/classes directory not found"
 
       - name: SonarQube Scan Action
         uses: sonarsource/sonarqube-scan-action@v3
@@ -32,6 +35,8 @@ jobs:
           args: >
             -Dsonar.projectKey=your-project-key
             -Dsonar.java.binaries=target/classes
+            -Dsonar.sources=src
+            -Dsonar.sourceEncoding=UTF-8
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
