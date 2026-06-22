@@ -19,6 +19,10 @@ jobs:
 
       - name: SonarQube Scan Action
         uses: sonarsource/sonarqube-scan-action@v3
+        with:
+          # Replace 'your-project-key' with the exact project key shown on your SonarQube screen
+          args: >
+            -Dsonar.projectKey=your-project-key
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
