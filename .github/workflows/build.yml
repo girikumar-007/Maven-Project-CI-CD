@@ -15,14 +15,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'  # or your required Java version
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean compile
 
       - name: SonarQube Scan Action
         uses: sonarsource/sonarqube-scan-action@v3
         with:
-          # Replace 'your-project-key' with the exact project key shown on your SonarQube screen
           args: >
             -Dsonar.projectKey=your-project-key
+            -Dsonar.java.binaries=target/classes
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
